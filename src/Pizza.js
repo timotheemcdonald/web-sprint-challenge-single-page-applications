@@ -50,8 +50,8 @@ const formValues = {
 }
 
 const formErrors = {
-    name:'',
-    size:'',
+    name:[],
+    size:''
 }
 
 const startDisabled = true
@@ -59,7 +59,7 @@ const startDisabled = true
 function Pizza() {
 
     const [newForm, setForm] = useState(formValues)
-    const [newError, setErrors] = useState(formErrors)
+    const [errors, setErrors] = useState(formErrors)
     const [disabled, setDisabled] = useState(startDisabled)
     const [displayOrder, setOrder] = useState([])
 
@@ -77,13 +77,14 @@ function Pizza() {
     const validationCheck = (event) => {
         event.persist()
         yup.reach(defaultSchema, event.target.name)
-        .validate(event.target.name)
+        .validate(event.target.value)
         .then(valid => setErrors(
-            {...newError, [event.target.name]:''}
+            {...errors, [event.target.name]:''}
         ))
-        .catch(error => setErrors(
-        {...newError, [event.target.name]: error.newError[0]}
-        ))
+        .catch(error => 
+            setErrors(
+                {...errors, [event.target.name]: error.errors}
+                ));
     }
 
 
@@ -138,9 +139,9 @@ function Pizza() {
                     name="name"
                     onChange={onChange}
                     value={newForm.name}
-                    errors={newError}
+                    errors={errors}
                     />
-                    <p>{newError.name}</p>
+                    <p>{errors.name}{console.log(errors.name) }</p>
                 </label>
 
                 <label htmlFor="size">Size: 
@@ -148,7 +149,7 @@ function Pizza() {
                     onChange={onChange}
                     value={newForm.size}
                     name="size"
-                    errors={newError}
+                    errors={errors}
                     >
 
                     <option value=''>Select a Size</option>
@@ -157,8 +158,9 @@ function Pizza() {
                     <option value='large'>Large</option>
                     <option value='xlarge'>Extra Large</option>
            
-                    <p>{newError.size}</p>
+                 
                     </select>
+                    <p>{errors.size}{console.log(errors.size)}</p>
                 </label>
                 </DivStyled>
                 <h2>Toppings</h2>
