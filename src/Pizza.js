@@ -6,6 +6,36 @@ import * as yup from 'yup'
 import axios from 'axios'
 import {Switch, Link, Route} from 'react-router-dom'
 
+const Div = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+`
+
+const DivStyled = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+flex-direction:column;
+border: 3px solid crimson;
+border-radius:5px;
+padding:10px;
+margin:10px;
+`
+
+const Order = styled.button`
+color:white;
+border:none;
+background-color: crimson;
+padding:10px;
+width:10vw;
+margin:10px;
+border-radius:5px;
+`
+
 const formValues = {
     name:'',
     size:'',
@@ -56,43 +86,6 @@ function Pizza() {
         ))
     }
 
-    // const getOrder = () => {
-    //     axios.get('https://reqres.in/api/users')
-    //     .then(value => {
-    //         setOrder(value.data)
-    //     })
-    //     .catch(error => {
-    //         console.log('get error')
-    //     })
-    // }
-
-    // const postOrder = (newDisplayOrder) => {
-    //     axios.post('https://reqres.in/api/users', newDisplayOrder)
-    //     .then(value => {
-       
-    //         const newPizzaOrder = value.data
-    //         console.log(newDisplayOrder)
-    //         console.log(value.data)
-    //         setOrder([newPizzaOrder, ...displayOrder])
-    //         setOrder(value.data)
-    //         setForm(formValues)
-    //     })
-    //     .catch(error => {
-    //         console.log('submit form error')
-    //     })
-    // }
-
-    // const onSubmit = (event) => {
-    //     event.preventDefault()
-    //     const newDisplayOrder = {
-    //         name:newForm.name,
-    //         size:newForm.size,
-    //         toppings: Object.keys(newForm.toppings).filter(choice => newForm.toppings[choice]),
-    //         special:newForm.special
-    //     }
-     
-    //     postOrder(newDisplayOrder)
-    // }
 
     const onSubmit = (event) => {
         event.preventDefault()
@@ -110,7 +103,9 @@ function Pizza() {
             /*test*/
             const newTeamMember = value.data
             setOrder([newTeamMember],...displayOrder)
-            setOrder(value.data)})
+            setOrder(value.data)
+            setForm(formValues)
+        })
         .catch(error => console.log('error', error))
     }
 
@@ -130,16 +125,14 @@ function Pizza() {
          })
     }
 
-    // useEffect(() => {
-    //     getOrder()
-    //   }, [])
   
 
     return (
-        <div>
-            This is the Form
+        <Div>
+          <h2>Order your Pizza</h2>
             <form onSubmit={onSubmit}>
-                <label htmlFor="name">Name
+                <DivStyled>
+                <label htmlFor="name">Name: 
                     <input 
                     type="text"
                     name="name"
@@ -150,7 +143,7 @@ function Pizza() {
                     <p>{newError.name}</p>
                 </label>
 
-                <label htmlFor="size">Size
+                <label htmlFor="size">Size: 
                     <select 
                     onChange={onChange}
                     value={newForm.size}
@@ -167,15 +160,14 @@ function Pizza() {
                     <p>{newError.size}</p>
                     </select>
                 </label>
-
-{/* <div className="toppings">
-    <p>Toppings</p> */}
-
-    <p>Toppings</p>
+                </DivStyled>
+                <h2>Toppings</h2>
+<DivStyled>
+ 
     <label>Extra Cheese
         <input 
         type="checkbox"
-        name="extracheese"
+        name="Extra Cheese"
         onChange={checkboxChange}
         value={newForm.toppings.extracheese === true}
         />
@@ -184,7 +176,7 @@ function Pizza() {
     <label>Pineapple
         <input 
         type="checkbox"
-        name="pineapple"
+        name="Pineapple"
         onChange={checkboxChange}
         value={newForm.toppings.pineapple === true}
         />
@@ -193,7 +185,7 @@ function Pizza() {
     <label>Jalapenos
         <input 
         type="checkbox"
-        name="jalapenos"
+        name="Jalapenos"
         onChange={checkboxChange}
         value={newForm.toppings.jalapenos === true}
         />
@@ -202,7 +194,7 @@ function Pizza() {
     <label>Pepperoni
         <input 
         type="checkbox"
-        name="pepperoni"
+        name="Pepperoni"
         onChange={checkboxChange}
         value={newForm.toppings.pepperoni === true}
         />
@@ -211,13 +203,15 @@ function Pizza() {
     <label>Mushrooms
         <input
         type="checkbox"
-        name="mushrooms"
+        name="Mushrooms"
         onChange={checkboxChange}
         value={newForm.toppings.mushrooms === true}
         />
     </label>
+    </DivStyled>
     
-                <label htmlFor="special">Special
+    <DivStyled>
+                <label htmlFor="special">Special Instructions:
                     <input 
                      type="text"
                      name="special"
@@ -225,22 +219,23 @@ function Pizza() {
                      value={newForm.special}
                     />
                 </label>
-
-                <button disabled={disabled}>Submit</button>
+                </DivStyled>
+             
+                <Order disabled={disabled}>Submit</Order>
             </form>
 
             <div>
                 Order Confirmation
-                <div>
+                <DivStyled>
 <p>
 {displayOrder.name}</p>
 <p>{displayOrder.size}</p>
 <p>{displayOrder.toppings}</p>
 <p>{displayOrder.special}
 </p>
+</DivStyled>
 </div>
-</div>
-            </div>
+            </Div>
 
    
     )

@@ -9,17 +9,32 @@ import {Switch, Link, Route} from 'react-router-dom'
 import Home from './Home'
 
 
+const Details = styled.header`
+
+background-color:crimson;
+color:ivory;
+min-height:10vh;
+display:flex;
+justify-content:space-around;
+align-items:center;
+
+a {
+  text-decoration:none;
+  color:ivory;
+}
+`
 
 const App = () => {
   return (
     <>
+    <Details>
       <h1>Lambda Eats</h1>
-      <p>You can remove this code and create your own header</p>
+     
 
-<div>
+
       <Link to="/">Home</Link>
       <Link to="/pizza">Pizza</Link>
-      </div>
+      </Details>
 
     <div>
       <Switch>
