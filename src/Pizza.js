@@ -56,28 +56,62 @@ function Pizza() {
         ))
     }
 
-    const postOrder = (newDisplayOrder) => {
-        axios.post('http://localhost:3000/pizza', newForm)
-        .then(value => {
-            const newOrder = value.data
-            setOrder([newOrder], ...displayOrder)
-            setOrder(value.data)
-        })
-        .catch(error => {
-            console.log('submit form error')
-        })
-    }
+    // const getOrder = () => {
+    //     axios.get('https://reqres.in/api/users')
+    //     .then(value => {
+    //         setOrder(value.data)
+    //     })
+    //     .catch(error => {
+    //         console.log('get error')
+    //     })
+    // }
+
+    // const postOrder = (newDisplayOrder) => {
+    //     axios.post('https://reqres.in/api/users', newDisplayOrder)
+    //     .then(value => {
+       
+    //         const newPizzaOrder = value.data
+    //         console.log(newDisplayOrder)
+    //         console.log(value.data)
+    //         setOrder([newPizzaOrder, ...displayOrder])
+    //         setOrder(value.data)
+    //         setForm(formValues)
+    //     })
+    //     .catch(error => {
+    //         console.log('submit form error')
+    //     })
+    // }
+
+    // const onSubmit = (event) => {
+    //     event.preventDefault()
+    //     const newDisplayOrder = {
+    //         name:newForm.name,
+    //         size:newForm.size,
+    //         toppings: Object.keys(newForm.toppings).filter(choice => newForm.toppings[choice]),
+    //         special:newForm.special
+    //     }
+     
+    //     postOrder(newDisplayOrder)
+    // }
 
     const onSubmit = (event) => {
         event.preventDefault()
-        const newDisplayOrder = {
-            name:newForm.name,
-            size:newForm.size,
-            toppings: Object.keys(newForm.toppings).filter(choice => newForm.toppings[choice]),
-            special:newForm.special
+        console.log('submit start')
+
+        const testPizza = {
+            name: newForm.name,
+            size: newForm.size,
+            toppings: Object.keys(newForm.toppings).filter(hb => newForm.toppings[hb]),
+            special: newForm.special
         }
-     
-        postOrder(newDisplayOrder)
+
+        axios.post('https://reqres.in/api/users', testPizza)
+        .then(value => {
+            /*test*/
+            const newTeamMember = value.data
+            setOrder([newTeamMember],...displayOrder)
+            setOrder(value.data)})
+        .catch(error => console.log('error', error))
     }
 
     const onChange = (event) => {
@@ -96,7 +130,9 @@ function Pizza() {
          })
     }
 
- 
+    // useEffect(() => {
+    //     getOrder()
+    //   }, [])
   
 
     return (
@@ -195,12 +231,14 @@ function Pizza() {
 
             <div>
                 Order Confirmation
+                <div>
 <p>
-{displayOrder.name}
-{displayOrder.size}
-{displayOrder.toppings}
-{displayOrder.special}
+{displayOrder.name}</p>
+<p>{displayOrder.size}</p>
+<p>{displayOrder.toppings}</p>
+<p>{displayOrder.special}
 </p>
+</div>
 </div>
             </div>
 
